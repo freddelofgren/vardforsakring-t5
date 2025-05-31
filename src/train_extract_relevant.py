@@ -70,7 +70,6 @@ def main():
 
     training_args = Seq2SeqTrainingArguments(
         output_dir=OUTPUT_DIR,
-        evaluation_strategy="no",
         per_device_train_batch_size=BATCH_SIZE,
         per_device_eval_batch_size=BATCH_SIZE,
         num_train_epochs=NUM_EPOCHS,
@@ -78,9 +77,10 @@ def main():
         weight_decay=0.01,
         save_total_limit=2,
         predict_with_generate=True,
-        fp16=True,
-        logging_steps=100,
-        save_steps=500,
+        fp16=False,                    # CPU -> kör med fp32
+        logging_strategy="steps",      # logga per batch
+        logging_steps=1,
+        save_steps=100,                # hur ofta modellen sparas
         report_to="none",
     )
 
@@ -92,7 +92,10 @@ def main():
         data_collator=data_collator,
     )
 
+    print(">>> Börjar träna modellen …")         # ← här
     trainer.train()
+    print(">>> Träningen avslutad.")            # ← och här
+
     trainer.save_model(OUTPUT_DIR)
     print(f"Model fine-tuned and saved to {OUTPUT_DIR}")
 
