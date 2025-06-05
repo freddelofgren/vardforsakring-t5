@@ -21,7 +21,7 @@ OUTPUT_DIR    = BASE_DIR / "models" / "all-tasks-t5-swedish"
 MAX_IN_LEN    = 512    # Max token-längd för input
 MAX_TGT_LEN   = 256    # Max token-längd för target
 BATCH_SIZE    = 2      # Justera till 1 eller 2 om du får OOM
-NUM_EPOCHS    = 3
+NUM_EPOCHS    = 10
 LEARNING_RATE = 5e-5
 
 def load_dataset_from_jsonl(path: Path) -> Dataset:
